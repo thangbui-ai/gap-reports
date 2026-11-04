@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rank Gap Research — Niche Reports</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;font-family:-apple-system,Segoe UI,Roboto,sans-serif}
+  body{display:flex;flex-direction:column}
+  header{background:#0f172a;color:#fff;padding:8px 14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;flex:0 0 auto}
+  header h1{font-size:15px;margin:0;font-weight:700}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap}
+  .tab{padding:6px 14px;border:1px solid #334155;background:#1e293b;color:#cbd5e1;border-radius:6px;cursor:pointer;font-size:13px;font-family:inherit}
+  .tab:hover{background:#334155}
+  .tab.active{background:#0ea5e9;color:#fff;border-color:#0ea5e9}
+  .tab.soon{opacity:.45;cursor:default}
+  .note{margin-left:auto;font-size:11px;color:#64748b}
+  .wrap{flex:1 1 auto;position:relative;background:#f8fafc}
+  iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:none}
+  iframe.active{display:block}
+  .hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#64748b;font-size:14px}
+</style></head>
+<body>
+<header>
+  <h1>📊 Rank Gap Research</h1>
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-src="dad-jokes.html">Dad Jokes</button>
+    <button class="tab" data-src="positive-pickle.html">Positive Pickle</button>
+    <button class="tab" data-src="blank-note.html">Blank Note</button>
+    <button class="tab" data-src="love-note.html">Love Note</button>
+    <button class="tab" data-src="dumpster-fire.html">Dumpster Fire</button>
+    <button class="tab" data-src="wilay.html">WILAY</button>
+    <button class="tab" data-src="coffee.html">Coffee</button>
+    <button class="tab" data-src="blank-coupon.html">Blank Coupon</button>
+    <button class="tab soon" disabled>+ ngách khác (sắp)</button>
+  </div>
+  <span class="note">tab = 1 ngách · report tải khi bấm vào tab</span>
+</header>
+<div class="wrap" id="wrap">
+  <div class="hint" id="hint">Đang tải…</div>
+</div>
+<script>
+  var wrap = document.getElementById('wrap'), hint = document.getElementById('hint');
+  var frames = {};
+  function show(src){
+    hint.style.display = 'none';
+    Object.keys(frames).forEach(function(s){ frames[s].classList.toggle('active', s === src); });
+    if(!frames[src]){
+      var f = document.createElement('iframe');
+      f.src = src; f.className = 'active'; f.loading = 'lazy';
+      frames[src] = f; wrap.appendChild(f);
+    } else {
+      frames[src].classList.add('active');
+    }
+  }
+  document.querySelectorAll('.tab[data-src]').forEach(function(t){
+    t.addEventListener('click', function(){
+      document.querySelectorAll('.tab').forEach(function(x){ x.classList.remove('active'); });
+      t.classList.add('active');
+      show(t.dataset.src);
+    });
+  });
+  show('dad-jokes.html');   // tab đầu tự mở (nhẹ 14MB); Positive Pickle 52MB chỉ tải khi bấm
+</script>
+</body></html>
